@@ -16,6 +16,11 @@ def is_accessible(path, mode='r'):
         return False
     return True
 
+#функция сохранения файла
+def save_file(path):
+    file = open(path, 'wb')
+    file.write(r.content)
+    file.close()    
 
 #задаём адрес каталога, в котором будут находиться файлы
 destination = 'xml_stepik'
@@ -32,6 +37,32 @@ else:
 
 #из заданного каталога и имени файла в url собираем путь к файлу
 path = os.path.abspath(destination) + '/' + os.path.basename(url)
+print(is_accessible(path))
+
+# проверяем наличие файла по указанному пути. Если файла нет, то запрашиваем его с url
+if not is_accessible(path):
+    r = requests.get(url) 
+    #проверяем является ли файл архивом zip
+    file_extention = os.path.splitext(url)
+    if file_extention[1] == '.zip':
+        while True:
+            print('файл - архив 'zip'. Если разархивировать, нажмите "1", если скачать архивом, нажмите "2": >> ')
+            code = input()
+            if code == '1':
+                with r, zipfile.ZipFile(io.BytesIO(r.content)) as archive:
+                    archive.extractall(destination)
+                break
+            elif code == '2':
+                save_file(path)
+                break
+            else:
+                continue
+
+    file = open(path, 'wb')
+    file.write(r.content)
+    file.close()
+else:
+    print('file in catalog')
 
 # #проверяем, скачали ли уже архив, если нет, то скачиваем
 # if not os.listdir(destination):
