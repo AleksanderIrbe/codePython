@@ -3,6 +3,19 @@ import requests
 import xmltodict
 import os
 
+# функция проверки наличия файла путем попытки открыть его    
+def is_accessible(path, mode='r'):
+    """
+    Проверка, является ли файл или папка из `path`
+    доступным для работы в предоставленным `mode` формате.
+    """
+    try:
+        f = open(path, mode)
+        f.close()
+    except IOError:
+        return False
+    return True
+
 
 #задаём адрес каталога, в котором будут находиться файлы
 destination = 'xml_stepik'
@@ -10,15 +23,13 @@ destination = 'xml_stepik'
 url = 'https://stepik.org/media/attachments/lesson/245678/map1.osm'
 
 
-
-
-
 #проверяем, создан ли уже каталог, если нет, то создаем
 if not os.path.exists(destination):
     os.makedirs(destination)
     print('make new: ' + os.path.abspath(destination))
 else:
-    print(os.path.abspath(destination))
+    print('check: ' + os.path.abspath(destination))
+
 
 # #проверяем, скачали ли уже архив, если нет, то скачиваем
 # if not os.listdir(destination):
