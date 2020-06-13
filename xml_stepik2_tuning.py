@@ -24,6 +24,13 @@ def save_file(path):
 
 #задаём адрес каталога, в котором будут находиться файлы
 destination = 'xml_stepik'
+print("по умолчанию каталог, в котором будут находиться файлы - " + destination)
+print("если оставить его, введите '0', если изменить, введите название кталога: >> ")
+dest = input()
+if dest == '0':
+    print('check: ' + os.path.abspath(destination))
+else:
+    destination = dest
 #задаем ссылку на файл, который нужно скачать
 url = 'https://stepik.org/media/attachments/lesson/245678/map1.osm'
 
@@ -32,8 +39,7 @@ url = 'https://stepik.org/media/attachments/lesson/245678/map1.osm'
 if not os.path.exists(destination):
     os.makedirs(destination)
     print('make new: ' + os.path.abspath(destination))
-else:
-    print('check: ' + os.path.abspath(destination))
+
 
 #из заданного каталога и имени файла в url собираем путь к файлу
 path = os.path.abspath(destination) + '/' + os.path.basename(url)
@@ -46,7 +52,7 @@ if not is_accessible(path):
     file_extention = os.path.splitext(url)
     if file_extention[1] == '.zip':
         while True:
-            print('файл - архив 'zip'. Если разархивировать, нажмите "1", если скачать архивом, нажмите "2": >> ')
+            print('файл - архив "zip". Если разархивировать, нажмите "1", если скачать архивом, нажмите "2": >> ')
             code = input()
             if code == '1':
                 with r, zipfile.ZipFile(io.BytesIO(r.content)) as archive:
@@ -58,9 +64,7 @@ if not is_accessible(path):
             else:
                 continue
 
-    file = open(path, 'wb')
-    file.write(r.content)
-    file.close()
+    save_file(path)
 else:
     print('file in catalog')
 
