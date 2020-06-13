@@ -30,6 +30,8 @@ if not os.path.exists(destination):
 else:
     print('check: ' + os.path.abspath(destination))
 
+#из заданного каталога и имени файла в url собираем путь к файлу
+path = os.path.abspath(destination) + '/' + os.path.basename(url)
 
 # #проверяем, скачали ли уже архив, если нет, то скачиваем
 # if not os.listdir(destination):
