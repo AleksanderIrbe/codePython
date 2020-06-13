@@ -33,6 +33,13 @@ else:
     destination = dest
 #задаем ссылку на файл, который нужно скачать
 url = 'https://stepik.org/media/attachments/lesson/245678/map1.osm'
+print("по умолчанию url, из которого читается файл - " + url)
+print("если оставить его, введите '0', если изменить, введите новый url: >> ")
+ur = input()
+if ur == '0':
+    print('check: ' + url)
+else:
+    url = ur
 
 
 #проверяем, создан ли уже каталог, если нет, то создаем
